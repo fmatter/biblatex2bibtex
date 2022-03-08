@@ -22,6 +22,10 @@ setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
+    install_requires=[
+        "pybtex==0.24.0",
+        "bibtexparser==1.2.0"
+    ],
     entry_points={
         "console_scripts": [
             "biblatex2bibtex=biblatex2bibtex.__main__:main",

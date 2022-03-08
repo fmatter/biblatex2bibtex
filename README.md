@@ -4,4 +4,4 @@ Usage:
 
 or 
 
-`biblatex2bibtex /path/to/biblatex_file.bib /path/tot/bibtex_file.bib`
+`biblatex2bibtex /path/to/biblatex_file.bib /path/to/bibtex_file.bib`

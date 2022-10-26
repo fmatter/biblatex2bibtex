@@ -1,9 +1,10 @@
 # import biblatex2bibtex
 import argparse
 import logging
+import sys
 from pathlib import Path
 from biblatex2bibtex import convert
-import sys
+
 
 log = logging.getLogger(__name__)
 

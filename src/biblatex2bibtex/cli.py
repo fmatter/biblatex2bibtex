@@ -1,26 +1,34 @@
 # import biblatex2bibtex
 import argparse
+import logging
 from pathlib import Path
 from biblatex2bibtex import convert
+import sys
+
+log = logging.getLogger(__name__)
 
 
 def main():
 
     parser = argparse.ArgumentParser(description="convert biblatex to bibtex files")
-    parser.add_argument("biblatexfile", help="biblatex file to be converted", type=str)
     parser.add_argument(
-        "bibtexfile", nargs="?", help="bibtex output", type=str, default=None
+        "biblatexfiles", nargs="+", help="biblatex file(s) to be converted", type=str
+    )
+    parser.add_argument(
+        "--output", nargs="?", help="bibtex output file", type=str, default=None
     )
     args = parser.parse_args()
 
-    in_file = Path(args.biblatexfile)
-    if not in_file.is_file() or in_file.suffix != ".bib":
-        print("Please enter a path to an existing .bib file")
+    for filename in args.biblatexfiles:
+        in_file = Path(filename)
+        if not in_file.is_file() or in_file.suffix != ".bib":
+            log.error("Please enter a path to a .bib file")
+            sys.exit()
 
-    if args.bibtexfile is None:
-        out_file = Path(in_file.parent / f"{in_file.stem}_out{in_file.suffix}")
+    if args.output is None:
+        out_file = Path(in_file.parent / f"{in_file.stem}_bibtex{in_file.suffix}")
+        log.warning(f"No bibtex output specified, saving to {out_file}")
     else:
-        out_file = Path(args.bibtexfile)
-    print(in_file, out_file)
+        out_file = Path(args.output)
 
-    convert(in_file, out_file)
+    convert(args.biblatexfiles, out_file)

@@ -1,7 +1,7 @@
-import bibtexparser
-from pathlib import Path
-import pkg_resources
 import subprocess
+from pathlib import Path
+import bibtexparser
+import pkg_resources
 from pybtex.database.input import bibtex
 
 

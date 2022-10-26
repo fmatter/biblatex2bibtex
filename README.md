@@ -11,4 +11,4 @@ Convert biblatex files to bibtex.
 
 Usage:
 
-`biblatex2bibtex /path/to/biblatex_file1.bib /path/to/biblatex_file2.bib --output /path/to/bibtex_file`
+`biblatex2bibtex /path/to/biblatex_file1.bib /path/to/biblatex_file2.bib --output /path/to/bibtex_file.bib`

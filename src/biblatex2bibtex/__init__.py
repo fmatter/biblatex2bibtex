@@ -4,22 +4,25 @@ import pkg_resources
 import subprocess
 from pybtex.database.input import bibtex
 
+
 def convert(path, outpath):
 
     parser = bibtex.Parser()
     bib_data = parser.parse_file(path)
-    for bibkey, entry in bib_data.entries.items():
+    for entry in bib_data.entries.values():
         if entry.type == "collection":
             entry.fields["booktitle"] = entry.fields["title"]
     bib_data.to_file(outpath)
 
-    conf_file = pkg_resources.resource_filename('biblatex2bibtex', 'data/biblatex2bibtex.conf')
+    conf_file = pkg_resources.resource_filename(
+        "biblatex2bibtex", "data/biblatex2bibtex.conf"
+    )
     cmd = f"biber --tool --configfile={conf_file} --output-resolve --output-file='{outpath}' {outpath}"
 
     subprocess.run(cmd, shell=True, check=True)
     Path(f"{outpath}.blg").unlink()
 
-    with open(outpath) as bibtex_file:
+    with open(outpath, "r", encoding="utf-8") as bibtex_file:
         bib_database = bibtexparser.load(bibtex_file)
 
     for i in bib_database.entries:
@@ -45,5 +48,5 @@ def convert(path, outpath):
             del i["note"]
             i["howpublished"] = "Manuscript"
 
-    with open(outpath, "w") as bibtex_file:
+    with open(outpath, "w", encoding="utf-8") as bibtex_file:
         bibtexparser.dump(bib_database, bibtex_file)

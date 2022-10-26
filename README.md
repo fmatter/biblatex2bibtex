@@ -7,6 +7,7 @@
 
 Convert biblatex files to bibtex.
 
+**Note: you need [`biber`](https://github.com/plk/biber)**
 
 Usage:
 

@@ -4,6 +4,10 @@ import bibtexparser
 import pkg_resources
 from pybtex.database.input import bibtex
 
+__author__ = "Florian Matter"
+__email__ = "florianmatter@gmail.com"
+__version__ = "0.0.11.dev"
+
 
 def convert(path, outpath):
 

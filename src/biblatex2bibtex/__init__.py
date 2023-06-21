@@ -5,7 +5,7 @@ import bibtexparser
 import colorlog
 import pkg_resources
 from pybtex.database.input import bibtex
-
+import re
 
 handler = colorlog.StreamHandler(None)
 handler.setFormatter(
@@ -18,9 +18,13 @@ log.addHandler(handler)
 
 
 __author__ = "Florian Matter"
-__email__ = "florianmatter@gmail.com"
+__email__ = "fmatter@mailbox.org"
 __version__ = "0.0.3.dev"
 
+macro_expr = re.compile(r"\\.*?\{(?P<content>.*?)\}")
+
+def remove_macros(s):
+    return macro_expr.sub(r"\g<content>",s)
 
 def preprocess(biblatex_file):
     biblatex_file = Path(biblatex_file)
@@ -32,6 +36,11 @@ def preprocess(biblatex_file):
         biblatex_file.parent / f"{biblatex_file.stem}_temp{biblatex_file.suffix}"
     )
     bib_data.to_file(temp_file)
+
+    with open(temp_file, "r", encoding="utf-8") as f:
+        content = remove_macros(f.read())
+    with open(temp_file, "w", encoding="utf-8") as f:
+        f.write(content)
 
     conf_file = pkg_resources.resource_filename(
         "biblatex2bibtex", "data/biblatex2bibtex.conf"
@@ -49,12 +58,12 @@ def modify(temp_file):
     with open(temp_file, "r", encoding="utf-8") as bibtex_file:
         bib_database = bibtexparser.load(bibtex_file)
 
-    for i in bib_database.entries:
-        i["title"] = i["title"].replace("{", "").replace("}", "")
-        if "booktitle" in i:
-            i["booktitle"] = i["booktitle"].replace("{", "").replace("}", "")
-        if "pages" in i:
-            i["pages"] = i["pages"].replace("--", "–")
+    for entry in bib_database.entries:
+        entry["title"] = entry["title"].replace("{", "").replace("}", "")
+        if "booktitle" in entry:
+            entry["booktitle"] = entry["booktitle"].replace("{", "").replace("}", "")
+        if "pages" in entry:
+            entry["pages"] = entry["pages"].replace("--", "–")
         replace = {
             "date": "year",
             "location": "address",
@@ -65,12 +74,12 @@ def modify(temp_file):
             "maintitle": "booktitle",
         }
         for k, v in replace.items():
-            if k in i:
-                i[v] = i[k]
-                del i[k]
-        if "note" in i and i["note"] == "\\textsc{ms}":
-            del i["note"]
-            i["howpublished"] = "Manuscript"
+            if k in entry:
+                entry[v] = entry[k]
+                del entry[k]
+        if "note" in entry and entry["note"] == "\\textsc{ms}":
+            del entry["note"]
+            entry["howpublished"] = "Manuscript"
     temp_file.unlink()
     return bib_database
 

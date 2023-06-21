@@ -11,6 +11,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 * supporting multiple input files
 
+### Fixed
+* macros in titles are ignored
+
 ## [0.0.1] - 2022-10-25
 
 Initial release

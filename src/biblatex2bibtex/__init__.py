@@ -1,11 +1,12 @@
 import logging
+import re
 import subprocess
 from pathlib import Path
 import bibtexparser
 import colorlog
 import pkg_resources
 from pybtex.database.input import bibtex
-import re
+
 
 handler = colorlog.StreamHandler(None)
 handler.setFormatter(
@@ -23,8 +24,10 @@ __version__ = "0.0.3.dev"
 
 macro_expr = re.compile(r"\\.*?\{(?P<content>.*?)\}")
 
+
 def remove_macros(s):
-    return macro_expr.sub(r"\g<content>",s)
+    return macro_expr.sub(r"\g<content>", s)
+
 
 def preprocess(biblatex_file):
     biblatex_file = Path(biblatex_file)
@@ -83,8 +86,8 @@ def modify(temp_file):
     temp_file.unlink()
     return bib_database
 
-def convert(biblatex_files, bibtex_output):
 
+def convert(biblatex_files, bibtex_output):
     temp_files = []
     for biblatex_file in biblatex_files:
         temp_files.append(preprocess(biblatex_file))

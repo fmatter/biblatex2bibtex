@@ -10,7 +10,6 @@ log = logging.getLogger(__name__)
 
 
 def main():
-
     parser = argparse.ArgumentParser(description="convert biblatex to bibtex files")
     parser.add_argument(
         "biblatexfiles", nargs="+", help="biblatex file(s) to be converted", type=str

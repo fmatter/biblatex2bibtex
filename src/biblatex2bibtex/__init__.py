@@ -80,6 +80,8 @@ def modify(temp_file):
             if k in entry:
                 entry[v] = entry[k]
                 del entry[k]
+        if "year" in entry and "-" in entry["year"]:
+            entry["year"] = entry["year"].split("-")[0]
         if "note" in entry and entry["note"] == "\\textsc{ms}":
             del entry["note"]
             entry["howpublished"] = "Manuscript"

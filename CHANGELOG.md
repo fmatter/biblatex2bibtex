@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## Changed
+
+* year ranges are simplified to the last year
+
 ## [0.0.3] - 2023-06-21
 
 ### Fixed

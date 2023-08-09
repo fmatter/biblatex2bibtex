@@ -8,13 +8,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.0.3] - 2023-06-21
 
+### Fixed
+* macros in titles are ignored
+
 ## [0.0.2] - 2022-10-26
 
 ### Changed
 * supporting multiple input files
-
-### Fixed
-* macros in titles are ignored
 
 ## [0.0.1] - 2022-10-25
 
